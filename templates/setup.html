@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Setup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1><u>QUIZLY</u></h1>
+
+        <form action="/start" method="POST">
+
+            <label><strong>Select Category</strong></label>
+
+            <select name="category">
+
+                <option value="27">🐾 Animals</option>
+                <option value="18">💻 Computers</option>
+                <option value="17">🔬 Science & Nature</option>
+                <option value="23">📜 History</option>
+                <option value="22">🌍 Geography</option>
+                <option value="21">⚽ Sports</option>
+                <option value="9">🧠 General Knowledge</option>
+
+            </select>
+
+            <label><strong>Select Difficulty</strong></label>
+
+            <select name="difficulty">
+
+                <option value="easy">🟢 Easy</option>
+                <option value="medium">🟡 Medium</option>
+                <option value="hard">🔴 Hard</option>
+
+            </select>
+
+            <label><strong>Number of Questions</strong></label>
+
+<select name="amount">
+
+    <option value="5">5 Questions</option>
+    <option value="10">10 Questions</option>
+    <option value="15">15 Questions</option>
+    <option value="20">20 Questions</option>
+
+</select>
+
+<br><br>
+
+            <br>
+
+            <button type="submit">
+                Start Quiz 🚀
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

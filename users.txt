@@ -1,0 +1,3 @@
+admin|admin123
+kp|1234
+krish|4321

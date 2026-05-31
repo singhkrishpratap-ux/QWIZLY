@@ -1,0 +1,9 @@
+Who developed Python?|Guido van Rossum|Python|Easy
+What does IoT stand for?|Internet of Things|IoT|Easy
+Which keyword is used to define a function in Python?|def|Python|Easy
+What is the capital of India?|Delhi|GK|Easy
+Which module is used to generate random numbers?|random|Python|Medium
+What is the full form of CPU?|Central Processing Unit|Technology|Medium
+Which company developed ChatGPT?|OpenAI|Technology|Medium
+What is the default HTTP port?|80|Technology|Hard
+Which bird is known for mimicking human speech?|Parrot|Animals|Easy

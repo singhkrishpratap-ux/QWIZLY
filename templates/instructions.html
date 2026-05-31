@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Instructions</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📋 Quiz Instructions</h1>
+
+        <br>
+
+        <div class="feature-card">
+            ✅ Correct Answer = 10 Points
+        </div>
+
+        <div class="feature-card">
+            ❌ Wrong Answer = 0 Points
+        </div>
+
+        <div class="feature-card">
+            🎯 Answer all questions carefully
+        </div>
+
+        <div class="feature-card">
+            🏆 Try to achieve the highest score possible
+        </div>
+
+        <br>
+
+        <form action="/quiz">
+
+            <button type="submit">
+                🚀 BEGIN QUIZ
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

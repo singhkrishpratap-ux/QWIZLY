@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="quiz-container">
+
+        <div class="quiz-card">
+
+            <!-- Progress Bar -->
+
+            <div class="progress-bar">
+
+         <div id="progressFill"
+         class="progress-fill"
+         data-progress="{{ progress }}">
+
+         </div>
+
+        </div>
+
+            <!-- Question Number -->
+
+            <h1>
+                Question {{ qno }} of {{ total }}
+            </h1>
+
+            <!-- Category & Difficulty -->
+
+            <div class="quiz-info">
+
+                <p>
+                    <strong>{{ category }}</strong>
+                </p>
+
+                <p>
+                    {{ difficulty.title() }}
+                </p>
+
+            </div>
+
+            <!-- Question -->
+
+            <h2 class="question-text">
+
+                {{ question }}
+
+            </h2>
+
+            <!-- Answer Form -->
+
+            <form method="POST">
+
+                {% for option in options %}
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="user_answer"
+                        value="{{ option }}"
+                        required>
+
+                    <span>
+                        {{ option }}
+                    </span>
+
+                </label>
+
+                {% endfor %}
+
+                <button
+                    type="submit"
+                    class="submit-btn">
+
+                    Next Question
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+<script>
+
+window.onload = function() {
+
+    let progressBar =
+        document.getElementById("progressFill");
+
+    let currentProgress =
+        parseInt(progressBar.dataset.progress);
+
+    let previousProgress =
+        currentProgress - (100 / {{ total }});
+
+    if(previousProgress < 0){
+        previousProgress = 0;
+    }
+
+    progressBar.style.width =
+        previousProgress + "%";
+
+    setTimeout(function(){
+
+        progressBar.style.width =
+            currentProgress + "%";
+
+    },100);
+
+};
+
+</script>
+</body>
+
+</html>
