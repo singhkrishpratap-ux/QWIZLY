@@ -170,9 +170,9 @@ def home():
 @app.route("/start", methods=["POST"])
 def start_quiz():
 
-    category = request.form["category"]
-    difficulty = request.form["difficulty"]
-    amount = request.form["amount"]
+    category = session["category"]
+    difficulty = session["difficulty"]
+    amount = session["amount"]  
 
     session["questions"] = get_questions(
         category,
@@ -182,45 +182,72 @@ def start_quiz():
 
     session["current"] = 0
     session["score"] = 0
+    session["review"] = []
 
     return redirect(url_for("instructions"))
 
 
-@app.route("/instructions")
+@app.route("/instructions", methods=["GET", "POST"])
 def instructions():
+
+    if request.method == "POST":
+
+        session["category"] = request.form["category"]
+        session["difficulty"] = request.form["difficulty"]
+        session["amount"] = request.form["amount"]
+
     return render_template("instructions.html")
 
 # QUIZ PAGE
-
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
 
-    questions = session.get("questions")
-
-    if not questions:
-        return redirect(url_for("home"))
-
+    questions = session.get("questions", [])
     current = session.get("current", 0)
 
+    if current >= len(questions):
+        return redirect(url_for("result"))
+
+    question = questions[current]
+
+    # Handle submitted answer
     if request.method == "POST":
 
         user_answer = request.form.get("user_answer")
 
-        correct_answer = questions[current]["answer"]
+        if "review" not in session:
+            session["review"] = []
 
-        if user_answer == correct_answer:
+        review = session.get("review", [])
+
+        review.append({
+            "question": question["question"],
+            "user_answer": user_answer,
+            "correct_answer": question["answer"],
+            "is_correct": user_answer == question["answer"]
+        })
+
+        session["review"] = review
+
+        if user_answer == question["answer"]:
             session["score"] += 10
 
-        session["current"] += 1
+        session["current"] = current + 1
 
         if session["current"] >= len(questions):
             return redirect(url_for("result"))
 
         return redirect(url_for("quiz"))
 
-    question = questions[current]
+    # TIMER BASED ON DIFFICULTY
+    if question["difficulty"] == "easy":
+        timer = 30
+    elif question["difficulty"] == "medium":
+        timer = 45
+    else:
+        timer = 60
 
-    progress = int(((current) / len(questions)) * 100)
+    progress = int(((current + 1) / len(questions)) * 100)
 
     return render_template(
         "quiz.html",
@@ -230,8 +257,20 @@ def quiz():
         options=question["options"],
         qno=current + 1,
         total=len(questions),
-        progress=progress
+        progress=progress,
+        timer=timer
     )
+@app.route("/next_question", methods=["POST"])
+def next_question():
+
+    session["current"] += 1
+
+    questions = session.get("questions", [])
+
+    if session["current"] >= len(questions):
+        return redirect(url_for("result"))
+
+    return redirect(url_for("quiz"))
 
 
 # RESULTS
@@ -253,14 +292,15 @@ def result():
     wrong = total_questions - correct
 
     return render_template(
-        "results.html",
-        score=score,
-        percentage=percentage,
-        correct=correct,
-        wrong=wrong,
-        total=total_questions
-    )
+    "results.html",
+    score=score,
+    percentage=percentage,
+    correct=correct,
+    wrong=wrong,
+    total=total_questions,
+    review=session.get("review", [])
+)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)

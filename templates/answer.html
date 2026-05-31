@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Answer Review</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <div class="quiz-card">
+
+        {% if is_correct %}
+
+        <h1>✅ Correct Answer</h1>
+
+        <h2>+10 Points</h2>
+
+        {% else %}
+
+        <h1>❌ Wrong Answer</h1>
+
+        <p>
+            <strong>Your Answer:</strong>
+            {{ user_answer }}
+        </p>
+
+        <p>
+            <strong>Correct Answer:</strong>
+            {{ correct_answer }}
+        </p>
+
+        <h2>+0 Points</h2>
+
+        {% endif %}
+
+        <form action="/next_question" method="POST">
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Next Question
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

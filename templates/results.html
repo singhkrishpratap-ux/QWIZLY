@@ -28,6 +28,42 @@
 
     </div>
 
+    <h2 style="margin-top:40px;">Answer Review</h2>
+
+{% for item in review %}
+
+<div class="review-card">
+
+    <h3>{{ item.question }}</h3>
+
+    <p>
+        Your Answer:
+        <strong>{{ item.user_answer }}</strong>
+    </p>
+
+    {% if item.is_correct %}
+
+        <p style="color:limegreen;">
+            ✅ Correct
+        </p>
+
+    {% else %}
+
+        <p style="color:red;">
+            ❌ Incorrect
+        </p>
+
+        <p>
+            Correct Answer:
+            <strong>{{ item.correct_answer }}</strong>
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
     <br>
 
     <a href="/home">

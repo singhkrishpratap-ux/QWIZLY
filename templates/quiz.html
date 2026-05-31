@@ -25,18 +25,27 @@
 
             <div class="progress-bar">
 
-         <div id="progressFill"
-         class="progress-fill"
-         data-progress="{{ progress }}">
+                <div id="progressFill"
+                     class="progress-fill"
+                     data-progress="{{ progress }}">
+                </div>
 
-         </div>
+            </div>
 
-        </div>
+            <!-- Timer -->
+
+            <div class="timer" id="timer">
+
+                ⏰ {{ timer }}s
+
+            </div>
 
             <!-- Question Number -->
 
             <h1>
+
                 Question {{ qno }} of {{ total }}
+
             </h1>
 
             <!-- Category & Difficulty -->
@@ -61,7 +70,7 @@
 
             </h2>
 
-            <!-- Answer Form -->
+            <!-- Form -->
 
             <form method="POST">
 
@@ -72,11 +81,12 @@
                     <input
                         type="radio"
                         name="user_answer"
-                        value="{{ option }}"
-                        required>
+                        value="{{ option }}">
 
                     <span>
+
                         {{ option }}
+
                     </span>
 
                 </label>
@@ -96,7 +106,10 @@
         </div>
 
     </div>
+
 <script>
+
+/* Progress Bar Animation */
 
 window.onload = function() {
 
@@ -125,7 +138,30 @@ window.onload = function() {
 
 };
 
+
+/* Timer */
+
+let timeLeft = {{ timer }};
+
+const countdown = setInterval(function() {
+
+    document.getElementById("timer").innerHTML =
+        "⏰ " + timeLeft + "s";
+
+    timeLeft--;
+
+    if(timeLeft < 0) {
+
+        clearInterval(countdown);
+
+        document.forms[0].submit();
+
+    }
+
+},1000);
+
 </script>
+
 </body>
 
 </html>
