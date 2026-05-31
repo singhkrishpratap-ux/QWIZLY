@@ -170,9 +170,9 @@ def home():
 @app.route("/start", methods=["POST"])
 def start_quiz():
 
-    category = session["category"]
-    difficulty = session["difficulty"]
-    amount = session["amount"]  
+    category = request.form["category"]
+    difficulty = request.form["difficulty"]
+    amount = request.form["amount"]     
 
     session["questions"] = get_questions(
         category,
