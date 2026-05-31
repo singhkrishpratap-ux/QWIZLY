@@ -187,15 +187,8 @@ def start_quiz():
     return redirect(url_for("instructions"))
 
 
-@app.route("/instructions", methods=["GET", "POST"])
+@app.route("/instructions")
 def instructions():
-
-    if request.method == "POST":
-
-        session["category"] = request.form["category"]
-        session["difficulty"] = request.form["difficulty"]
-        session["amount"] = request.form["amount"]
-
     return render_template("instructions.html")
 
 # QUIZ PAGE
